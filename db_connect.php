@@ -1,13 +1,15 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "kcal";
+$config = require 'config.php';
 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
+try{
+    $conn = new mysqli(
+        $config['db_host'],
+        $config['db_user'],
+        $config['db_pass'],
+        $config['db_name']
+    );
+} catch (Exception $e){
     die("Connection failed: " . $conn->connect_error);
 }
+
 ?>
