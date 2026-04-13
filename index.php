@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calorie Cost Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <?php
 require("db_connect.php");
-$select_all = "SELECT * FROM main ORDER BY name";
+$select_all = "SELECT * FROM products ORDER BY name";
 $result =  $conn->query($select_all); 
 
 
-//TODO: add data to db through form. table content: id, name, calories, cost, weight, calories/cost, calories/weight
-//TODO: fetch data
-
-/*
-Do programu wrzucamy nazwę produktu, jego wagę całkowitą, cenę za sztukę oraz liczbę kalorii na 100 gram. 
-Program liczy ile kalorii dostaniemy za złotówkę, oraz ile kalorii znajduje się w jednym gramie produktu
-*/
-
 echo'<table> 
+<tr>
 <th>ID</th>
 <th>Name</th>
-<th>Calories</th>
-<th>Cost</th>
+<th>Calories per 100g</th>
+<th>Price</th>
 <th>Weight[g]</th>
-<th>Calories per 1PLN</th>
-<th>Calories per 1 gram</th>
-<th>Whole calories</th>
-'; //kalorie w całym produkcie[kalorie na gram razy waga]
+<th>Calories per gram</th>
+<th>Total calories</th>
+<th>Calories per PLN</th>
+<th>Created at</th>
+</tr>
+';
 
 while($row = $result->fetch_assoc()){
     $entry_id = $row['id'];
     echo'<tr>';
 
     echo'<td>' . $row['id'] . '</td>';
-    echo'<td>' . $row['Name'] . '</td>';
-    echo'<td>' . $row['Calories'] . '</td>';
-    echo'<td>' . $row['Cost'] . '</td>';
-    echo'<td>' . $row['Weight'] . '</td>';
-    echo'<td>' . $row['Calories/Cost'] . '</td>';
-    echo'<td>' . $row['Calories/Weight'] . '</td>';
-    echo'<td>' . $row['whole_calories'] . '</td>';
+    echo'<td>' . $row['name'] . '</td>';
+    echo'<td>' . $row['kcal_per_100g'] . '</td>';
+    echo'<td>' . $row['price'] . '</td>';
+    echo'<td>' . $row['weight_g'] . '</td>';
+    echo'<td>' . $row['kcal_per_g'] . '</td>';
+    echo'<td>' . $row['total_kcal'] . '</td>';
+    echo'<td>' . $row['kcal_per_pln'] . '</td>';
+    echo'<td>' . $row['created_at'] . '</td>';
+    
     echo'<td>';
     echo'<form action="delete.php"></form>
     <input type="hidden" name="id" value="<?=$entry_id?>">
@@ -57,11 +54,11 @@ echo'</table>';
 
     NAME: <input type="text" id="name" name="name"> [char]
     <br>
-    KCAL: <input type="text" id="kcal" name="kcal"> [int[kcal/100g]]
+    KCAL: <input type="number" id="kcal_per_100g" name="kcal_per_100g"> [int[kcal/100g]]
     <br>
-    COST: <input type="text" id="cost" name="cost">[float[pln]]
+    COST: <input type="number" id="price" name="price">[float[pln]]
     <br>
-    WEIGHT: <input type="text" id="weight" name="weight">[float[g]]
+    WEIGHT: <input type="number" id="weight_g" name="weight_g">[float[g]]
     <br>
     <input type="submit" value="UPLOAD">
 </form>
