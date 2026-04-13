@@ -40,11 +40,12 @@ while($row = $result->fetch_assoc()){
     echo'<td>' . $row['total_kcal'] . '</td>';
     echo'<td>' . $row['kcal_per_pln'] . '</td>';
     echo'<td>' . $row['created_at'] . '</td>';
-    
+
     echo'<td>';
-    echo'<form action="delete.php"></form>
-    <input type="hidden" name="id" value="<?=$entry_id?>">
-    <button class="exit">x</button>';
+    echo'<form action="delete.php" method="POST">'; 
+    echo'<input type="hidden" name="id" value="' . $row['id'] . '">'; 
+    echo'<button type="submit" class="exit">x</button>';
+    echo'</form>';
     echo'</td>';
     echo'</tr>';
 }
